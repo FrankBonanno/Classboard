@@ -2,6 +2,8 @@ require('dotenv').config();
 const express = require('express');
 const morgan = require('morgan');
 const connectDB = require('./db/connect');
+const notFound = require('./middleware/notFound');
+const errorHandler = require('./middleware/errorHandler');
 
 const app = express();
 const PORT = process.env.PORT;
@@ -13,7 +15,7 @@ app.use(morgan('dev'));
 app.use(express.json());
 
 /* ROUTES */
-app.get('/', (req, res) => {
+app.get('/api', (req, res) => {
     res.send('Server Working!');
 });
 
