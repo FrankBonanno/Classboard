@@ -1,6 +1,8 @@
 const express = require('express');
 const router = express.Router();
+const { getCourses } = require('../controllers/courseController');
+// , getCourse, createCourse, updateCourse, deleteCourse
 
-router.route('/').get((req, res) => res.send('courses router!'));
+router.route('/').get(getCourses);
 
 module.exports = router;
