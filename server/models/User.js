@@ -3,11 +3,11 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 
 const UserSchema = mongoose.Schema({
-    fullName: {
+    name: {
         type: String,
-        required: [true, 'Please Provide Your Full Name'],
+        required: [true, 'Please Provide Name'],
         minlength: 3,
-        maxlength: 40,
+        maxlength: 30,
     },
     email: {
         type: String,
@@ -27,13 +27,15 @@ const UserSchema = mongoose.Schema({
     },
 });
 
+// Password Hash Before Save
 UserSchema.pre('save', async function (next) {
     const salt = await bcrypt.genSalt(10);
-    this.password = bcrypt.hash(this.password, salt);
+    this.password = await bcrypt.hash(this.password, salt);
+    console.log(this.password);
     next();
 });
 
-/* Generate JWT func */
+// Generate JWT function
 UserSchema.methods.genJWT = function () {
     return jwt.sign(
         {
