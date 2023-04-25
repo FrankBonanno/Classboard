@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const { getCourses, getCourse, createCourse, deleteCourse } = require('../controllers/courseController');
-// , updateCourse, deleteCourse
+// updateCourse
 
 router.route('/').get(getCourses).post(createCourse);
 
