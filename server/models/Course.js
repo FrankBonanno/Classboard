@@ -6,7 +6,6 @@ const AssignmentSchema = mongoose.Schema(
             type: String,
             required: [true, 'Please Provide The Assignment Name'],
             trim: true,
-            unique: true,
         },
         dueDate: {
             type: Date,
@@ -27,7 +26,6 @@ const CourseSchema = mongoose.Schema({
         type: String,
         required: [true, 'Please Provide The Course Name'],
         trim: true,
-        unique: true,
     },
     color: {
         type: String,
