@@ -18,7 +18,7 @@ const auth = async (req, res, next) => {
         };
         next();
     } catch (error) {
-        console.error(error); // Log the error to the console
+        // console.error(error); // Log the error to the console
         throw new UnauthError('Invalid Auth :(');
     }
 };
