@@ -18,8 +18,12 @@ const auth = async (req, res, next) => {
         };
         next();
     } catch (error) {
-        // console.error(error); // Log the error to the console
-        throw new UnauthError('Invalid Auth :(');
+        if (error instanceof jwt.TokenExpiredError) {
+            throw new UnauthError('Authentication expired');
+        } else {
+            // console.error(error); // Log the error to the console
+            throw new UnauthError('Invalid Auth :(');
+        }
     }
 };
 

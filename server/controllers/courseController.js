@@ -34,4 +34,30 @@ const deleteCourse = async (req, res) => {
     res.status(StatusCodes.OK).json({ deletedCourse });
 };
 
-module.exports = { getCourses, getCourse, createCourse, deleteCourse };
+const updateCourse = async (req, res) => {
+    const userId = req.user.userId;
+    const courseId = req.params.id;
+
+    const course = await Course.findOne({ _id: courseId, createdBy: userId });
+    if (!course) {
+        throw new NotFoundError(`No Course Found With ID: ${courseId}`);
+    }
+
+    const { name, color, assignments } = req.body;
+
+    if (name) {
+        course.name = name;
+    }
+    if (color) {
+        course.color = color;
+    }
+    if (assignments) {
+        course.assignments = assignments;
+    }
+
+    await course.save();
+
+    res.status(StatusCodes.OK).json({ updatedCourse: course });
+};
+
+module.exports = { getCourses, getCourse, createCourse, deleteCourse, updateCourse };

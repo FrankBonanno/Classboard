@@ -5,6 +5,8 @@ const morgan = require('morgan');
 const cors = require('cors');
 const helmet = require('helmet');
 const xss = require('xss-clean');
+const chalk = require('chalk');
+const cookieParser = require('cookie-parser');
 
 const connectDB = require('./db/connect');
 const notFound = require('./middleware/notFound');
@@ -23,6 +25,7 @@ app.use(xss());
 app.use(morgan('dev'));
 
 /* MIDDLEWARE */
+app.use(cookieParser());
 app.use(express.json());
 
 /* ROUTES */
@@ -36,12 +39,13 @@ app.use(errorHandler);
 /* Request Listener */
 const start = async () => {
     try {
+        console.log(chalk.yellow('Connecting to Mongo...'));
         await connectDB(process.env.MONGO_URI);
         app.listen(PORT, () => {
-            console.log(`Server Listening On Port ${PORT}...`);
+            console.log(`Server ${chalk.green('Listening')} On Port: ${chalk.red.underline(PORT)}`);
         });
     } catch (err) {
-        console.log(err);
+        console.error(err);
     }
 };
 start();
