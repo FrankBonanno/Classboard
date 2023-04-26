@@ -1,0 +1,9 @@
+version: '3'
+
+services:
+    server:
+        build: .
+        container_name: classboard-server
+        image: classboard_server
+        ports:
+            - '3001:3001'
